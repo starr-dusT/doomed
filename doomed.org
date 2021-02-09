@@ -548,29 +548,22 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
                                   :time-grid t
                                   :date today
                                   :todo "TODAY"
-                                  :scheduled today
-                                  :order 2)
+                                  :scheduled today)
                            (:name "DUE"
-                                  :deadline today
-                                  :order 3)
+                                  :deadline today)
                            (:name "OVERDUE"
-                                  :deadline past
-                                  :order 4)
+                                  :deadline past)
                            (:name "DUE SOON"
-                                  :deadline future
-                                  :order 5)))))
+                                  :deadline future)))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
                           '((:discard (:not (:tag ("@work"))))
                             (:name "IN PROGRESS"
-                                   :todo "WIP"
-                                   :order 2)
-                            (:name "DELEGATED"
-                                   :todo "GAVE"
-                                   :order 98)
+                                   :todo "WIP")
                             (:name "TASK TO REFILE"
-                                   :file-path "~/documents/org/gtd/capture/inbox.org"
-                                   :order 99)))))))))
+                                   :file-path "gtd/capture")
+                            (:name "DELEGATED"
+                                   :todo "GAVE")))))))))
 #+end_src
 
 **** Org-ql
