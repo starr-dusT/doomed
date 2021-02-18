@@ -218,10 +218,10 @@ We start by simply defining the standard headers used by the three files. These 
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format +onsave)  ; automated prettiness
+       format              ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
-       ;;multiple-cursors  ; editing in many places at once
+       multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        parinfer          ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
@@ -256,7 +256,7 @@ We start by simply defining the standard headers used by the three files. These 
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       ;;lsp
+       lsp
        magit               ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -314,8 +314,9 @@ We start by simply defining the standard headers used by the three files. These 
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       python            ; beautiful is better than ugly
-       ;;qt                ; the 'cutest' gui framework ever
+       (python            ; beautiful is better than ugly
+        +lsp)
+        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        ;;rest              ; Emacs as a REST client
@@ -365,6 +366,12 @@ We start by simply defining the standard headers used by the three files. These 
    :branch "master"))
 
 (package! hindent)
+
+
+(package! beancount-mode :recipe
+  (:host github
+   :repo "beancount/beancount-mode"
+   :branch "main"))
                 
 #+end_src
 * General Configuration
@@ -660,9 +667,25 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
 #+end_src
 * Devel
 ** Haskell
-
 #+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
-
 (add-hook 'haskell-mode-hook #'hindent-mode)
+(setq lsp-enable-on-type-formatting nil)
+#+end_src
+** Beancount
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+(defun ts/next-fixme()
+       "Move cursor and delete next FIXME in beancount file."
+       (interactive)
+       (re-search-forward "FIXME" nil t)
+       (delete-char -5))
 
+(defun ts/next-fixme-replace()
+       "Move cursor, delete next FIXME, and insert account in beancount file."
+       (interactive)
+       (ts/next-fixme)
+       (call-interactively 'beancount-insert-account)
+       (call-interactively 'beancount-align-numbers))
+(beancount-mode)
+(define-key beancount-mode-map (kbd "C-c F") #'ts/next-fixme)
+(define-key beancount-mode-map (kbd "C-c f") #'ts/next-fixme-replace)
 #+end_src

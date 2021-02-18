@@ -70,3 +70,9 @@
    :branch "master"))
 
 (package! hindent)
+
+
+(package! beancount-mode :recipe
+  (:host github
+   :repo "beancount/beancount-mode"
+   :branch "main"))

@@ -268,3 +268,20 @@
                                           ; Org File Paths
 
 (add-hook 'haskell-mode-hook #'hindent-mode)
+(setq lsp-enable-on-type-formatting nil)
+
+(defun ts/next-fixme()
+       "Move cursor and delete next FIXME in beancount file."
+       (interactive)
+       (re-search-forward "FIXME" nil t)
+       (delete-char -5))
+
+(defun ts/next-fixme-replace()
+       "Move cursor, delete next FIXME, and insert account in beancount file."
+       (interactive)
+       (ts/next-fixme)
+       (call-interactively 'beancount-insert-account)
+       (call-interactively 'beancount-align-numbers))
+(beancount-mode)
+(define-key beancount-mode-map (kbd "C-c F") #'ts/next-fixme)
+(define-key beancount-mode-map (kbd "C-c f") #'ts/next-fixme-replace)
