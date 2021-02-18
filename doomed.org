@@ -451,14 +451,16 @@ Define the org todo keywords we'll use.
 #+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "CHASE(c)" "WIP(w)"
+        '((sequence "TODO(t)" "NEXT(n)" "CHASE(c)" "WIP(p)" "WAIT(w@/!)"
                     "GAVE(g@/!)" "|" "KILL(k@/!)" "DONE(d)")))
   ; TODO add (1)...(10) numbers for task ordering (replacing "next")
   (setq org-todo-keyword-faces
       (quote (("TODO"  :foreground "red"          :weight bold)
               ("CHASE" :foreground "red"          :weight bold)
               ("WIP"   :foreground "blue"         :weight bold)
+              ("NEXT"  :foreground "orange"       :weight bold)
               ("GAVE"  :foreground "orange"       :weight bold)
+              ("WAIT"  :foreground "orange"       :weight bold)
               ("KILL"  :foreground "forest green" :weight bold)
               ("DONE"  :foreground "forest green" :weight bold))))
 #+end_src
@@ -509,7 +511,7 @@ Allowable tags: @work, @home, note, question, habit
                  :template ("* TODO %?" "%U"))
                 ("question" :keys "q"
                  :file org-capture-todo
-                 :template ("* TODO Find out %? :question:@home:"
+                 :template ("* TODO Find out %? :question:"
                             "%U"))
                 ("habit" :keys "h"
                  :file org-capture-todo
@@ -543,8 +545,7 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
         '(("w" "Super awesome work agenda"
            ((agenda "" ((org-agenda-span 'day)
                         (org-super-agenda-groups
-                         '((:discard (:not (:tag ("@work"))))
-                           (:name "TODAY"
+                         '((:name "TODAY"
                                   :time-grid t
                                   :date today
                                   :todo "TODAY"
@@ -557,13 +558,27 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
                                   :deadline future)))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
-                          '((:discard (:not (:tag ("@work"))))
+                          '((:name "TASK TO REFILE"
+                                   :file-path "gtd/capture")
                             (:name "IN PROGRESS"
                                    :todo "WIP")
-                            (:name "TASK TO REFILE"
-                                   :file-path "gtd/capture")
+                            (:name "IMPORTANT"
+                                   :priority "A")
+                            (:name "INACTIVE PROJECTS"
+                                   :and (:tag ("prj" "subprj")
+                                         :not (:children "WIP")))
+                            (:name "ACTIVE PROJECTS"
+                                   :tag ("prj" "subprj"))
+                            (:name "QUESTION"
+                                   :tag "question")
+                            (:name "STANDALONE TASKS"
+                                   :todo "TODO")
+                            (:name "WAITING"
+                                   :todo "WAITING")
                             (:name "DELEGATED"
-                                   :todo "GAVE")))))))))
+                                   :todo "GAVE")
+                            (:name "MEETINGS"
+                                   :tag "meeting")))))))))
 #+end_src
 
 **** Org-ql
