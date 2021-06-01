@@ -3,7 +3,6 @@
 #+email: tyler@tstarr.us
 #+keywords:  org-mode Emacs Doom config
 * References
-
 Configuring Emacs can be an obsession. I have bounced back and forth between my from [[https://github.com/starr-dusT/scratch][scratch]] config and doom. In the end I find it hard to give up all the amazing work [[https://github.com/hlissner][hlissner]] has put into doom. Doom really simpifies the process of configuring Emacs with lots of pre-made bits and a nice framework for configuration. As much as it annoys me to not completelty control the config of the whole system I must comprimise to maintain my sanity. Find some useful references below:
 
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs Github]]
