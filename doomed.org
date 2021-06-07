@@ -453,6 +453,7 @@ I'm attempting to use [[https://github.com/org-roam/org-roam][Org-Roam]] to impl
 (setq org-roam-directory (concat org-directory "roam"))
 (setq org-roam-db-location (concat org-directory "roam/org-roam.db"))
 #+end_src
+
 ** Get Things Done (GTD)
 *** Tasks
 
