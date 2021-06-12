@@ -280,7 +280,6 @@
 
   (setq org-startup-folded t)
   (setq org-src-preserve-indentation t))  ; Close the after! org expression from
-                                          ; Org File Paths
 
 (add-hook 'haskell-mode-hook #'hindent-mode)
 (setq lsp-enable-on-type-formatting nil)
