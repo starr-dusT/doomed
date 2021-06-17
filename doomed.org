@@ -175,6 +175,7 @@ We start by simply defining the standard headers used by the three files. These 
 #+end_src
 #+html: </details>
 * Doom modules
+
 #+begin_src emacs-lisp :tangle init.el
 (doom! :input
        ;;chinese
@@ -347,6 +348,7 @@ We start by simply defining the standard headers used by the three files. These 
        ;;literate
        (default +bindings +smartparens))
 #+end_src
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! doct)
 (package! org-super-agenda :recipe
@@ -377,18 +379,25 @@ We start by simply defining the standard headers used by the three files. These 
    :branch "master"))
 
 #+end_src
+
 * General Configuration
 ** This System
+
 #+begin_src emacs-lisp :tangle "config.el"
-(setq this-system "basilisk")
-(setq system-category-1 '("kestrel" "basilisk" "adjudicator"))
+(setq this-system "kestrel")
+(setq all-systems '("kestrel" "basilisk" "adjudicator"))
+(setq only-kestrel '("kestrel"))
 #+end_src
+
 ** Identity
+
 #+begin_src emacs-lisp :tangle "config.el"
 (setq user-full-name "Tyler Starr"
       user-mail-address "starrtyler88@gmail.com")
 #+end_src
+
 ** User Interface
+
 #+begin_src emacs-lisp :tangle "config.el"
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -411,11 +420,12 @@ We start by simply defining the standard headers used by the three files. These 
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 #+end_src
+
 ** Keybindings
 
 Add all my additional keybinds to Doom's standard SPC lead keymapping system.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (map! :leader
       ; Add to the "open" menu in Doom
       (:prefix-map ("o" . "open")
@@ -426,15 +436,12 @@ Add all my additional keybinds to Doom's standard SPC lead keymapping system.
        :desc "This Weeks Progress" "p" (cmd! (org-ql-view "This Weeks Progress")))))
 #+end_src
 
-#+RESULTS:
-| lambda | (&rest _) | (interactive) | (org-ql-view This Weeks Progress) |
-
 * Org mode
 ** Org directories
 
 Define the folder structure for my gtd-esque setup. I don't declaritvely define every file within this folder stucture, but search for .org files within four primary folders: capture, agenda, todo, and note.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (setq org-directory "~/documents/org/")
 (setq org-capture (directory-files-recursively
                    (concat org-directory "gtd/capture/") "\.org$"))
@@ -444,11 +451,12 @@ Define the folder structure for my gtd-esque setup. I don't declaritvely define 
                 (concat org-directory "gtd/todo/") "\.org$"))
 (setq org-agenda-files (append org-capture org-agenda org-todo))
 #+end_src
+
 ** Org-Roam
 
 I'm attempting to use [[https://github.com/org-roam/org-roam][Org-Roam]] to implement something of the Zettelkasten method. I know... I know it is the flavor of the month, but I've tried to develop my own notetaking methods and workflow and found myself paralyzed by choice. So I'll give this a try!
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (setq org-roam-directory (concat org-directory "roam"))
 (setq org-roam-db-location (concat org-directory "roam/org-roam.db"))
 #+end_src
@@ -458,7 +466,7 @@ I'm attempting to use [[https://github.com/org-roam/org-roam][Org-Roam]] to impl
 
 Define the org todo keywords we'll use.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (after! org
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "CHASE(c)" "WIP(p)" "WAIT(w@/!)"
@@ -474,11 +482,12 @@ Define the org todo keywords we'll use.
               ("KILL"  :foreground "forest green" :weight bold)
               ("DONE"  :foreground "forest green" :weight bold))))
 #+end_src
+
 *** Tags
 
 Define the A tier tags.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-use-tag-inheritance t)
   (setq org-tags-exclude-from-inheritance '("prj" "prg" "subprj"))
   (setq org-tag-alist
@@ -505,7 +514,7 @@ Define the A tier tags.
 
 Define the different files that are used for capture. Currently, I use inbox.org for TODO esque items and note.org for notes.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-capture-todo (concat org-directory "gtd/capture/inbox.org"))
 #+end_src
 
@@ -515,7 +524,7 @@ Setup org-capture templates for nice capturing.
 
 Allowable tags: @work, @home, note, question, habit
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-capture-templates
         (doct '(("todo" :keys "t"
                  :file org-capture-todo
@@ -536,21 +545,23 @@ Allowable tags: @work, @home, note, question, habit
                  :template ("* NEXT %? :meeting:"
                             "%U")))))
 #+end_src
+
 *** Refile
 
 Set various refile settings. Mostly stolen from the great http://doc.norang.ca/org-mode.html.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-refile-targets (quote ((nil :maxlevel . 3)
                                    (org-agenda-files :maxlevel . 3))))
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 #+end_src
+
 *** Views
 **** Agenda
 
 Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda items without any fancy sorting or anything like that.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-agenda-start-day "0d")
   (setq org-agenda-custom-commands
         '(("w" "Super awesome work agenda"
@@ -598,7 +609,8 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
 Following config items will utilizes the awesome [[https://github.com/alphapapa/org-ql#function-org-ql-block][org-ql]] and [[https://github.com/alphapapa/org-super-agenda][super-org-agenda]] to setup custom views with fancy sorting and insights. More details to follow!
 
 ***** Weekly Agenda
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-ql-weekly-agenda
       (cons "Weekly Agenda"
               (lambda ()
@@ -606,8 +618,10 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
               (interactive)
               (org-agenda nil "t"))))
 #+end_src
+
 ***** Tasks to Refile
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-ql-refile-tasks
       (cons "Tasks to Refile"
               (lambda ()
@@ -621,8 +635,10 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
               :super-groups '((:name "Todos"
                               :not (:tag "note")))))))
 #+end_src
+
 ***** This Weeks Progress
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-ql-weeks-progress
       (cons "This Weeks Progress"
           (lambda ()
@@ -650,8 +666,10 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
                               :scheduled future
                               :deadline future)))))))
 #+end_src
+
 ***** Project View
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (defun open-org-ql-project (program)
     (org-ql-search (list program)
       '(and (todo)
@@ -668,8 +686,10 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
                     :require-match t
                     :action #'open-org-ql-project))))
 #+end_src
+
 ***** Final
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-super-agenda-header-map (make-sparse-keymap))
   (setq org-ql-views
         (list org-ql-weekly-agenda
@@ -679,20 +699,25 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
   (after! org-agenda
       (org-super-agenda-mode))
 #+end_src
+
 ** Misc small settings
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-startup-folded t)
   (setq org-src-preserve-indentation t))  ; Close the after! org expression from
-                                          ; Org File Paths
 #+end_src
+
 * Devel
 ** Haskell
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (add-hook 'haskell-mode-hook #'hindent-mode)
 (setq lsp-enable-on-type-formatting nil)
 #+end_src
+
 ** Beancount
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "config.el" "no")
+
+#+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (defun ts/next-fixme()
        "Move cursor and delete next FIXME in beancount file."
        (interactive)
