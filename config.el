@@ -57,9 +57,8 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq this-system "kestrel")
+(setq this-system "basilisk")
 (setq system-category-1 '("kestrel" "basilisk" "adjudicator"))
-(setq system-category-2 '("kestrel"))
 
 (setq user-full-name "Tyler Starr"
       user-mail-address "starrtyler88@gmail.com")
@@ -130,6 +129,7 @@
       ("@home" . ?h)
       ("@work" . ?w)
       ("question" . ?q)
+      ("exclude" . ?e)
       ("prj" . ?p)
       ("subprj" . ?s)
       ("prg" . ?P)
@@ -190,21 +190,22 @@
                                    :todo "WIP")
                             (:name "IMPORTANT"
                                    :priority "A")
-                            (:name "INACTIVE PROJECTS"
-                                   :and (:tag ("prj" "subprj")
-                                         :not (:children "WIP")))
-                            (:name "ACTIVE PROJECTS"
-                                   :tag ("prj" "subprj"))
+                            ;(:name "INACTIVE PROJECTS"
+                            ;       :and (:tag ("prj" "subprj")
+                            ;             :not (:children "WIP")))
+                            ;(:name "ACTIVE PROJECTS"
+                            ;       :tag ("prj" "subprj"))
                             (:name "QUESTION"
                                    :tag "question")
                             (:name "STANDALONE TASKS"
-                                   :todo "TODO")
+                                   :and (:todo "TODO"
+                                         :not (:tag "exclude")))
                             (:name "WAITING"
-                                   :todo "WAITING")
+                                   :and (:todo "WAITING"
+                                         :not (:tag "exclude")))
                             (:name "DELEGATED"
-                                   :todo "GAVE")
-                            (:name "MEETINGS"
-                                   :tag "meeting")))))))))
+                                   :and (:todo "GAVE"
+                                         :not (:tag "exclude")))))))))))
 
   (setq org-ql-weekly-agenda
       (cons "Weekly Agenda"

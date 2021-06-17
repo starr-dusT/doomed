@@ -380,9 +380,8 @@ We start by simply defining the standard headers used by the three files. These 
 * General Configuration
 ** This System
 #+begin_src emacs-lisp :tangle "config.el"
-(setq this-system "kestrel")
+(setq this-system "basilisk")
 (setq system-category-1 '("kestrel" "basilisk" "adjudicator"))
-(setq system-category-2 '("kestrel"))
 #+end_src
 ** Identity
 #+begin_src emacs-lisp :tangle "config.el"
@@ -489,6 +488,7 @@ Define the A tier tags.
       ("@home" . ?h)
       ("@work" . ?w)
       ("question" . ?q)
+      ("exclude" . ?e)
       ("prj" . ?p)
       ("subprj" . ?s)
       ("prg" . ?P)
@@ -575,21 +575,22 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
                                    :todo "WIP")
                             (:name "IMPORTANT"
                                    :priority "A")
-                            (:name "INACTIVE PROJECTS"
-                                   :and (:tag ("prj" "subprj")
-                                         :not (:children "WIP")))
-                            (:name "ACTIVE PROJECTS"
-                                   :tag ("prj" "subprj"))
+                            ;(:name "INACTIVE PROJECTS"
+                            ;       :and (:tag ("prj" "subprj")
+                            ;             :not (:children "WIP")))
+                            ;(:name "ACTIVE PROJECTS"
+                            ;       :tag ("prj" "subprj"))
                             (:name "QUESTION"
                                    :tag "question")
                             (:name "STANDALONE TASKS"
-                                   :todo "TODO")
+                                   :and (:todo "TODO"
+                                         :not (:tag "exclude")))
                             (:name "WAITING"
-                                   :todo "WAITING")
+                                   :and (:todo "WAITING"
+                                         :not (:tag "exclude")))
                             (:name "DELEGATED"
-                                   :todo "GAVE")
-                            (:name "MEETINGS"
-                                   :tag "meeting")))))))))
+                                   :and (:todo "GAVE"
+                                         :not (:tag "exclude")))))))))))
 #+end_src
 
 **** Org-ql
