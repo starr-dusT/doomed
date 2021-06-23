@@ -57,8 +57,9 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq this-system "basilisk")
-(setq system-category-1 '("kestrel" "basilisk" "adjudicator"))
+(setq this-system "kestrel")
+(setq all-systems '("kestrel" "basilisk" "adjudicator"))
+(setq only-kestrel '("kestrel"))
 
 (setq user-full-name "Tyler Starr"
       user-mail-address "starrtyler88@gmail.com")
@@ -169,7 +170,7 @@
   (setq org-agenda-start-day "0d")
   (setq org-agenda-custom-commands
         '(("w" "Super awesome work agenda"
-           ((agenda "" ((org-agenda-span 'day)
+           ((agenda "" ((org-agenda-span 'week)
                         (org-super-agenda-groups
                          '((:name "TODAY"
                                   :time-grid t
@@ -181,7 +182,12 @@
                            (:name "OVERDUE"
                                   :deadline past)
                            (:name "DUE SOON"
-                                  :deadline future)))))
+                                  :deadline future)
+                           (:name "PAST SCHEDULED"
+                                  :scheduled past)
+                           (:name "SCHEDULED SOON"
+                                  :scheduled future)
+                            (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
                           '((:name "TASK TO REFILE"
@@ -190,11 +196,6 @@
                                    :todo "WIP")
                             (:name "IMPORTANT"
                                    :priority "A")
-                            ;(:name "INACTIVE PROJECTS"
-                            ;       :and (:tag ("prj" "subprj")
-                            ;             :not (:children "WIP")))
-                            ;(:name "ACTIVE PROJECTS"
-                            ;       :tag ("prj" "subprj"))
                             (:name "QUESTION"
                                    :tag "question")
                             (:name "STANDALONE TASKS"

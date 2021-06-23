@@ -565,7 +565,7 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
   (setq org-agenda-start-day "0d")
   (setq org-agenda-custom-commands
         '(("w" "Super awesome work agenda"
-           ((agenda "" ((org-agenda-span 'day)
+           ((agenda "" ((org-agenda-span 'week)
                         (org-super-agenda-groups
                          '((:name "TODAY"
                                   :time-grid t
@@ -577,7 +577,12 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
                            (:name "OVERDUE"
                                   :deadline past)
                            (:name "DUE SOON"
-                                  :deadline future)))))
+                                  :deadline future)
+                           (:name "PAST SCHEDULED"
+                                  :scheduled past)
+                           (:name "SCHEDULED SOON"
+                                  :scheduled future)
+                            (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
                           '((:name "TASK TO REFILE"
@@ -586,11 +591,6 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
                                    :todo "WIP")
                             (:name "IMPORTANT"
                                    :priority "A")
-                            ;(:name "INACTIVE PROJECTS"
-                            ;       :and (:tag ("prj" "subprj")
-                            ;             :not (:children "WIP")))
-                            ;(:name "ACTIVE PROJECTS"
-                            ;       :tag ("prj" "subprj"))
                             (:name "QUESTION"
                                    :tag "question")
                             (:name "STANDALONE TASKS"
