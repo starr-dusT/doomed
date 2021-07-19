@@ -153,14 +153,14 @@
                             "%U"))
                 ("habit" :keys "h"
                  :file org-capture-todo
-                 :template ("* NEXT %? :habit" "%U"
+                 :template ("* NEXT %? :habit:exclude:" "%U"
                             "SCHEDULED: %(format-time-string
                                          \"%<<%Y-%m-%d %a .+1d/3d>>\")"
                             ":PROPERTIES:" ":STYLE: habit"
                             ":REPEAT_TO_STATE: NEXT" ":END:"))
                 ("meeting" :keys "m"
                  :file org-capture-todo
-                 :template ("* NEXT %? :meeting:"
+                 :template ("* NEXT %? :meeting:exclude:"
                             "%U")))))
 
   (setq org-refile-targets (quote ((nil :maxlevel . 3)
@@ -170,7 +170,7 @@
   (setq org-agenda-start-day "0d")
   (setq org-agenda-custom-commands
         '(("w" "Super awesome work agenda"
-           ((agenda "" ((org-agenda-span 'week)
+           ((agenda "" ((org-agenda-span 'day)
                         (org-super-agenda-groups
                          '((:name "TODAY"
                                   :time-grid t
@@ -187,7 +187,7 @@
                                   :scheduled past)
                            (:name "SCHEDULED SOON"
                                   :scheduled future)
-                            (:discard (:anything t))))))
+                           (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
                           '((:name "TASK TO REFILE"
@@ -206,7 +206,8 @@
                                          :not (:tag "exclude")))
                             (:name "DELEGATED"
                                    :and (:todo "GAVE"
-                                         :not (:tag "exclude")))))))))))
+                                         :not (:tag "exclude")))
+                            (:discard (:anything t))))))))))
 
   (setq org-ql-weekly-agenda
       (cons "Weekly Agenda"
