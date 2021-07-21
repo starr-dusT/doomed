@@ -57,9 +57,10 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq this-system "kestrel")
+(setq this-system "basilisk")
 (setq all-systems '("kestrel" "basilisk" "adjudicator"))
 (setq only-kestrel '("kestrel"))
+(setq only-basilisk '("basilisk"))
 
 (setq user-full-name "Tyler Starr"
       user-mail-address "starrtyler88@gmail.com")
@@ -168,11 +169,12 @@
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   (setq org-agenda-start-day "0d")
+  (setq org-agenda-show-future-repeats 'next)
   (setq org-agenda-custom-commands
         '(("w" "Super awesome work agenda"
-           ((agenda "" ((org-agenda-span 'day)
+           ((agenda "" ((org-agenda-overriding-header "")
                         (org-super-agenda-groups
-                         '((:name "TODAY"
+                         '((:name "SCHEDULED"
                                   :time-grid t
                                   :date today
                                   :todo "TODAY"
@@ -281,8 +283,13 @@
   (after! org-agenda
       (org-super-agenda-mode))
 
-  (setq org-startup-folded t)
-  (setq org-src-preserve-indentation t))  ; Close the after! org expression from
+(setq org-startup-folded t)
+(setq org-src-preserve-indentation t)) ; Close the after! org expression
+
+(defcustom org-outlook-location (w32-short-file-name "/c/ProgramData/Microsoft/Windows/Start Menu/Programs/Outlook 2016.lnk")
+  "Microsoft Outlook 2013 location."
+  :type 'string
+  :group 'org-outlook)
 
 (add-hook 'haskell-mode-hook #'hindent-mode)
 (setq lsp-enable-on-type-formatting nil)

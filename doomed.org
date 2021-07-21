@@ -378,15 +378,21 @@ We start by simply defining the standard headers used by the three files. These 
    :repo "zk-phi/scad-preview"
    :branch "master"))
 
+(package! org-outlook :recipe
+  (:host github
+   :repo "mattfidler/org-outlook.el"
+   :branch "master"))
+
 #+end_src
 
 * General Configuration
 ** This System
 
 #+begin_src emacs-lisp :tangle "config.el"
-(setq this-system "kestrel")
+(setq this-system "basilisk")
 (setq all-systems '("kestrel" "basilisk" "adjudicator"))
 (setq only-kestrel '("kestrel"))
+(setq only-basilisk '("basilisk"))
 #+end_src
 
 ** Identity
@@ -563,11 +569,12 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
 
 #+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
   (setq org-agenda-start-day "0d")
+  (setq org-agenda-show-future-repeats 'next)
   (setq org-agenda-custom-commands
         '(("w" "Super awesome work agenda"
-           ((agenda "" ((org-agenda-span 'day)
+           ((agenda "" ((org-agenda-overriding-header "")
                         (org-super-agenda-groups
-                         '((:name "TODAY"
+                         '((:name "SCHEDULED"
                                   :time-grid t
                                   :date today
                                   :todo "TODAY"
@@ -704,8 +711,19 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
 ** Misc small settings
 
 #+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
-  (setq org-startup-folded t)
-  (setq org-src-preserve-indentation t))  ; Close the after! org expression from
+(setq org-startup-folded t)
+(setq org-src-preserve-indentation t)) ; Close the after! org expression
+
+#+end_src
+* Work Specific
+
+This allows for quick creation of links to Outlook emails through saved files
+
+#+begin_src emacs-lisp :tangle (if (member this-system only-basilisk) "config.el" "no")
+(defcustom org-outlook-location (w32-short-file-name "/c/ProgramData/Microsoft/Windows/Start Menu/Programs/Outlook 2016.lnk")
+  "Microsoft Outlook 2013 location."
+  :type 'string
+  :group 'org-outlook)
 #+end_src
 
 * Devel
