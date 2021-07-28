@@ -586,9 +586,11 @@ Currenlty I prefer to used vanilla Org-Agenda to view currently scheduled agenda
                            (:name "DUE SOON"
                                   :deadline future)
                            (:name "PAST SCHEDULED"
-                                  :scheduled past)
+                                  :and (:scheduled past
+                                        :not (:todo "WIP")))
                            (:name "SCHEDULED SOON"
-                                  :scheduled future)
+                                  :and (:scheduled future
+                                        :not (:todo "WIP")))
                            (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
@@ -713,7 +715,6 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
 #+begin_src emacs-lisp :tangle (if (member this-system all-systems) "config.el" "no")
 (setq org-startup-folded t)
 (setq org-src-preserve-indentation t)) ; Close the after! org expression
-
 #+end_src
 * Work Specific
 

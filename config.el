@@ -186,9 +186,11 @@
                            (:name "DUE SOON"
                                   :deadline future)
                            (:name "PAST SCHEDULED"
-                                  :scheduled past)
+                                  :and (:scheduled past
+                                        :not (:todo "WIP")))
                            (:name "SCHEDULED SOON"
-                                  :scheduled future)
+                                  :and (:scheduled future
+                                        :not (:todo "WIP")))
                            (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
