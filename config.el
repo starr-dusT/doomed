@@ -289,11 +289,6 @@
 (setq org-startup-folded t)
 (setq org-src-preserve-indentation t)) ; Close the after! org expression
 
-(defcustom org-outlook-location (w32-short-file-name "/c/ProgramData/Microsoft/Windows/Start Menu/Programs/Outlook 2016.lnk")
-  "Microsoft Outlook 2013 location."
-  :type 'string
-  :group 'org-outlook)
-
 (add-hook 'haskell-mode-hook #'hindent-mode)
 (setq lsp-enable-on-type-formatting nil)
 

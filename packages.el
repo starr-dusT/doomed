@@ -80,8 +80,3 @@
   (:host github
    :repo "zk-phi/scad-preview"
    :branch "master"))
-
-(package! org-outlook :recipe
-  (:host github
-   :repo "mattfidler/org-outlook.el"
-   :branch "master"))

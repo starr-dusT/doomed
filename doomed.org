@@ -377,12 +377,6 @@ We start by simply defining the standard headers used by the three files. These 
   (:host github
    :repo "zk-phi/scad-preview"
    :branch "master"))
-
-(package! org-outlook :recipe
-  (:host github
-   :repo "mattfidler/org-outlook.el"
-   :branch "master"))
-
 #+end_src
 
 * General Configuration
@@ -717,17 +711,6 @@ Following config items will utilizes the awesome [[https://github.com/alphapapa/
 (setq org-startup-folded t)
 (setq org-src-preserve-indentation t)) ; Close the after! org expression
 #+end_src
-* Work Specific
-
-This allows for quick creation of links to Outlook emails through saved files
-
-#+begin_src emacs-lisp :tangle (if (member this-system only-basilisk) "config.el" "no")
-(defcustom org-outlook-location (w32-short-file-name "/c/ProgramData/Microsoft/Windows/Start Menu/Programs/Outlook 2016.lnk")
-  "Microsoft Outlook 2013 location."
-  :type 'string
-  :group 'org-outlook)
-#+end_src
-
 * Devel
 ** Haskell
 
