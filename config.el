@@ -178,7 +178,8 @@
                                   :time-grid t
                                   :date today
                                   :todo "TODAY"
-                                  :scheduled today)
+                                  :scheduled today
+                                  :not (:todo "WIP"))
                            (:name "DUE"
                                   :deadline today)
                            (:name "OVERDUE"
@@ -186,11 +187,11 @@
                            (:name "DUE SOON"
                                   :deadline future)
                            (:name "PAST SCHEDULED"
-                                  :and (:scheduled past
-                                        :not (:todo "WIP")))
+                                  :scheduled past
+                                  :not (:todo "WIP"))
                            (:name "SCHEDULED SOON"
-                                  :and (:scheduled future
-                                        :not (:todo "WIP")))
+                                  :scheduled future
+                                  :not (:todo "WIP"))
                            (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
@@ -206,7 +207,7 @@
                                    :and (:todo "TODO"
                                          :not (:tag "exclude")))
                             (:name "WAITING"
-                                   :and (:todo "WAITING"
+                                   :and (:todo "WAIT"
                                          :not (:tag "exclude")))
                             (:name "DELEGATED"
                                    :and (:todo "GAVE"
