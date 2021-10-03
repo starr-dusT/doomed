@@ -310,7 +310,7 @@ We start by simply defining the standard headers used by the three files. These 
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org               ; organize your plain life in plain text
-        +roam)
+        +roam2)
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -373,17 +373,13 @@ We start by simply defining the standard headers used by the three files. These 
    :repo "beancount/beancount-mode"
    :branch "main"))
 
-(package! scad-preview :recipe
-  (:host github
-   :repo "zk-phi/scad-preview"
-   :branch "master"))
 #+end_src
 
 * General Configuration
 ** This System
 
 #+begin_src emacs-lisp :tangle "config.el"
-(setq this-system "basilisk")
+(setq this-system "kestrel")
 (setq all-systems '("kestrel" "basilisk" "adjudicator"))
 (setq only-kestrel '("kestrel"))
 (setq only-basilisk '("basilisk"))

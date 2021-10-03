@@ -57,7 +57,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq this-system "basilisk")
+(setq this-system "kestrel")
 (setq all-systems '("kestrel" "basilisk" "adjudicator"))
 (setq only-kestrel '("kestrel"))
 (setq only-basilisk '("basilisk"))

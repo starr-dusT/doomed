@@ -75,8 +75,3 @@
   (:host github
    :repo "beancount/beancount-mode"
    :branch "main"))
-
-(package! scad-preview :recipe
-  (:host github
-   :repo "zk-phi/scad-preview"
-   :branch "master"))
