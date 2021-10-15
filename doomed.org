@@ -373,6 +373,8 @@ We start by simply defining the standard headers used by the three files. These 
    :repo "beancount/beancount-mode"
    :branch "main"))
 
+(package! org-chef)
+
 #+end_src
 
 * General Configuration

@@ -75,3 +75,5 @@
   (:host github
    :repo "beancount/beancount-mode"
    :branch "main"))
+
+(package! org-chef)
